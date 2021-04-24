@@ -10,8 +10,44 @@ import java.sql.Statement;
 
 public class Dao implements IDao {
 
-    private String databaseUrl = "";
+    private String databaseUrl = "jdbc:mysql://localhost:3306/ISSdatabase";
     private Connection connection;
+
+    @Override
+    public String getCurrentIssPosition() {
+        return null;
+    }
+
+    @Override
+    public int addIssPosition(ISSPosition issPosition) {
+//         Wprowadzenie danych do bazy danych.  Latitude(String), Longitude(String), timestamp(sekundy, long),
+//        Data dodania rekordu(LocalDate), Liczba czlonkow zalogi(int), predkosc poruszania sie stacji(int)
+        String insertIssPosition = String.format("INSERT INTO iss_database (latitude, longitude, timestamp, date)" +
+                "VALUES('%s', '%s', %d, localtime())", issPosition.getLatitude(), issPosition.getLongitude(),
+                issPosition.getUnixTime());
+        return update(insertIssPosition);
+    }
+
+    @Override
+    public int addIssSpeed() {
+
+        return 0;
+    }
+
+    @Override
+    public int getIssSpeed() {
+        return 0;
+    }
+
+    @Override
+    public int getHowManyPeopleInIss() {
+        return 0;
+    }
+
+    @Override
+    public int getFlightsOverSpecifiedPlace(String specifiedPlace) {
+        return 0;
+    }
 
     private void openConnection(){
         try {
@@ -44,39 +80,5 @@ public class Dao implements IDao {
         }
         closeConnection();
         return result;
-    }
-
-    @Override
-    public String getCurrentIssPosition() {
-        return null;
-    }
-
-    @Override
-    public ISSPosition addIssPosition(ISSPosition issPosition) {
-//         Wprowadzenie danych do bazy danych.  Latitude(String), Longitude(String), timestamp(sekundy, long),
-//        Data dodania rekordu(LocalDate), Liczba czlonkow zalogi(int), predkosc poruszania sie stacji(int)
-        String insertIssPosition = String.format("INSERT INTO ()");
-        return null;
-    }
-
-    @Override
-    public int addIssSpeed() {
-
-        return 0;
-    }
-
-    @Override
-    public int getIssSpeed() {
-        return 0;
-    }
-
-    @Override
-    public int getHowManyPeopleInIss() {
-        return 0;
-    }
-
-    @Override
-    public int getFlightsOverSpecifiedPlace(String specifiedPlace) {
-        return 0;
     }
 }

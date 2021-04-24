@@ -7,7 +7,7 @@ import java.util.List;
 public interface IDao {
     String getCurrentIssPosition();
 
-    ISSPosition addIssPosition(ISSPosition issPosition);
+    int addIssPosition(ISSPosition issPosition);
 
     int addIssSpeed();
 

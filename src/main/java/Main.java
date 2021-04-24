@@ -1,3 +1,4 @@
+import dao.Dao;
 import model.ISSPosition;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -25,6 +26,9 @@ public class Main {
         position.setLongitude((String)coordinates.get("longitude"));
 
         System.out.println(position);
+
+        Dao daoIssPosition = new Dao();
+        daoIssPosition.addIssPosition(position);
     }
 
 }
