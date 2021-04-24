@@ -12,6 +12,7 @@ public class Main {
         URL url = new URL("http://api.open-notify.org/iss-now.json");
         URLConnection urlcon = url.openConnection();
 
+
         InputStream is = urlcon.getInputStream();
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         String line;
@@ -21,4 +22,6 @@ public class Main {
         }
 
     }
+
+
 }
