@@ -30,8 +30,11 @@ public class Main {
         position.setLatitude((String) coordinates.get("latitude"));
         position.setLongitude((String) coordinates.get("longitude"));
 
-//        Dao daoIssPosition = new Dao();
+        Dao daoIssPosition = new Dao();
 //        daoIssPosition.addIssPosition(position);
+//        System.out.println(daoIssPosition.getLastIssCoordinates());
+//        System.out.println(daoIssPosition.getOneBeforeLastIssCoordinates());
+
 
         url = new URL("http://api.open-notify.org/astros.json");
         urlcon = url.openConnection();

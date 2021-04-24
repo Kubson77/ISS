@@ -5,7 +5,7 @@ import model.ISSPosition;
 import java.util.List;
 
 public interface IDao {
-    List<ISSPosition> getLastIssCoordinates();
+    ISSPosition getLastIssCoordinates();
 
     int addIssPosition(ISSPosition issPosition);
 
@@ -14,8 +14,5 @@ public interface IDao {
     int getIssSpeed();
 
     int getHowManyPeopleInIss();
-
-    int getFlightsOverSpecifiedPlace(String specifiedPlace);
-
 
 }

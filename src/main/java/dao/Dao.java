@@ -13,21 +13,43 @@ public class Dao implements IDao {
     private Connection connection;
 
     @Override
-    public List<ISSPosition> getLastIssCoordinates() {
-        List<ISSPosition> issPositionList = new ArrayList<>();
+    public ISSPosition getLastIssCoordinates() {
+
+        ISSPosition issPosition = new ISSPosition();
         openConnection();
         try {
-            String queryGetLastCoordinates = "SELECT latitude, longitude, timestamp FROM iss_database ORDER BY id DESC limit 1";
+            String queryGetLastCoordinates = "SELECT * FROM iss_database ORDER BY id DESC limit 1";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(queryGetLastCoordinates);
-            while (resultSet.next()){
-                issPositionList.add(getIssPostiionFromResultSet(resultSet));
+            while (resultSet.next()) {
+                issPosition.setLongitude(resultSet.getString("longitude"));
+                issPosition.setLatitude(resultSet.getString("latitude"));
+                issPosition.setUnixTime(resultSet.getLong("timestamp"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         closeConnection();
-        return issPositionList;
+        return issPosition;
+    }
+
+    public ISSPosition getOneBeforeLastIssCoordinates() {
+        ISSPosition issPosition = new ISSPosition();
+        openConnection();
+        try {
+            String queryGetLastCoordinates = "SELECT * FROM (SELECT * FROM iss_database ORDER BY id DESC LIMIT 2) iss_database ORDER BY id limit 1";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(queryGetLastCoordinates);
+            while (resultSet.next()) {
+                issPosition.setLongitude(resultSet.getString("longitude"));
+                issPosition.setLatitude(resultSet.getString("latitude"));
+                issPosition.setUnixTime(resultSet.getLong("timestamp"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        closeConnection();
+        return issPosition;
     }
 
     @Override
@@ -35,13 +57,25 @@ public class Dao implements IDao {
 //         Wprowadzenie danych do bazy danych.  Latitude(String), Longitude(String), timestamp(sekundy, long),
 //        Data dodania rekordu(LocalDate), Liczba czlonkow zalogi(int), predkosc poruszania sie stacji(int)
         String insertIssPosition = String.format("INSERT INTO iss_database (latitude, longitude, timestamp, date)" +
-                "VALUES('%s', '%s', %d, localtime())", issPosition.getLatitude(), issPosition.getLongitude(),
+                        "VALUES('%s', '%s', %d, localtime())", issPosition.getLatitude(), issPosition.getLongitude(),
                 issPosition.getUnixTime());
         return update(insertIssPosition);
     }
 
     @Override
     public int addIssSpeed() {
+        //róznica między timestampami ostatniego i przedostatniego rekordu
+        long differenceBetweenTimeStamps =
+                getLastIssCoordinates().getUnixTime()
+                        - getOneBeforeLastIssCoordinates().getUnixTime();
+
+        long differenceBetweenLongitudes =
+                Long.getLong(getLastIssCoordinates().getLongitude())
+                        - Long.getLong(getOneBeforeLastIssCoordinates().getLongitude());
+        long differenceBetweenLatitudes =
+                Long.getLong(getLastIssCoordinates().getLatitude())
+                        - Long.getLong(getOneBeforeLastIssCoordinates().getLatitude());
+
 
         return 0;
     }
@@ -56,12 +90,7 @@ public class Dao implements IDao {
         return 0;
     }
 
-    @Override
-    public int getFlightsOverSpecifiedPlace(String specifiedPlace) {
-        return 0;
-    }
-
-    private void openConnection(){
+    private void openConnection() {
         try {
             connection = DriverManager.getConnection(databaseUrl, "root", "example12345");
             System.out.println("Database Connected");
@@ -70,8 +99,8 @@ public class Dao implements IDao {
         }
     }
 
-    private void closeConnection(){
-        if (connection != null){
+    private void closeConnection() {
+        if (connection != null) {
             try {
                 connection.close();
                 System.out.println("Database connection closed");
@@ -81,7 +110,7 @@ public class Dao implements IDao {
         }
     }
 
-    private int update(String input){
+    private int update(String input) {
         openConnection();
         int result = 1;
         try {
@@ -93,6 +122,7 @@ public class Dao implements IDao {
         closeConnection();
         return result;
     }
+
     private ISSPosition getIssPostiionFromResultSet(ResultSet resultSet) throws SQLException {
         ISSPosition issPosition = new ISSPosition();
         issPosition.setLatitude(resultSet.getString("latitude"));
