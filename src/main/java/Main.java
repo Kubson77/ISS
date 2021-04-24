@@ -7,6 +7,8 @@ import java.net.URLConnection;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+
+        //TEST scaiagania danych z open notify api
         URL url = new URL("http://api.open-notify.org/iss-now.json");
         URLConnection urlcon = url.openConnection();
 
