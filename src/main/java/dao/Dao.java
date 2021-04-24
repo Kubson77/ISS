@@ -3,10 +3,9 @@ package dao;
 import dao.IDao;
 import model.ISSPosition;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Dao implements IDao {
 
@@ -14,8 +13,21 @@ public class Dao implements IDao {
     private Connection connection;
 
     @Override
-    public String getCurrentIssPosition() {
-        return null;
+    public List<ISSPosition> getLastIssCoordinates() {
+        List<ISSPosition> issPositionList = new ArrayList<>();
+        openConnection();
+        try {
+            String queryGetLastCoordinates = "SELECT latitude, longitude, timestamp FROM iss_database ORDER BY id DESC limit 1";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(queryGetLastCoordinates);
+            while (resultSet.next()){
+                issPositionList.add(getIssPostiionFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        closeConnection();
+        return issPositionList;
     }
 
     @Override
@@ -80,5 +92,12 @@ public class Dao implements IDao {
         }
         closeConnection();
         return result;
+    }
+    private ISSPosition getIssPostiionFromResultSet(ResultSet resultSet) throws SQLException {
+        ISSPosition issPosition = new ISSPosition();
+        issPosition.setLatitude(resultSet.getString("latitude"));
+        issPosition.setLongitude(resultSet.getString("longitude"));
+        issPosition.setUnixTime(resultSet.getLong("timestamp"));
+        return issPosition;
     }
 }
