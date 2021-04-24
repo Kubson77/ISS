@@ -1,6 +1,7 @@
 package model;
 
 public class ISSPosition {
+    private int id;
     private long unixTime;
     private String latitude;
     private String longitude;
@@ -36,6 +37,14 @@ public class ISSPosition {
 
     public void setLongitude(String longitude) {
         this.longitude = longitude;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
