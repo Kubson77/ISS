@@ -1,3 +1,5 @@
+package dao;
+
 import dao.IDao;
 import model.ISSPosition;
 
