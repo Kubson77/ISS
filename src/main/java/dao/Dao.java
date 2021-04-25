@@ -67,20 +67,24 @@ public class Dao implements IDao {
 
     @Override
     public int addIssSpeed() {
-        //róznica między timestampami ostatniego i przedostatniego rekordu
-        long differenceBetweenTimeStamps =
-                getLastIssCoordinates().getUnixTime()
-                        - getOneBeforeLastIssCoordinates().getUnixTime();
+        if (getLastIssCoordinates() != null && getOneBeforeLastIssCoordinates() != null) {
+            long differenceBetweenTimeStamps =
+                    getLastIssCoordinates().getUnixTime()
+                            - getOneBeforeLastIssCoordinates().getUnixTime();
 
-        double x1 = Double.parseDouble(getOneBeforeLastIssCoordinates().getLatitude());
-        double x2 = Double.parseDouble(getLastIssCoordinates().getLatitude());
-        double y1 = Double.parseDouble(getOneBeforeLastIssCoordinates().getLongitude());
-        double y2 = Double.parseDouble(getLastIssCoordinates().getLongitude());
+            double x1 = Double.parseDouble(getOneBeforeLastIssCoordinates().getLatitude());
+            double x2 = Double.parseDouble(getLastIssCoordinates().getLatitude());
+            double y1 = Double.parseDouble(getOneBeforeLastIssCoordinates().getLongitude());
+            double y2 = Double.parseDouble(getLastIssCoordinates().getLongitude());
 
-        double distance = sqrt(pow((x2 - x1), 2) + pow(((cos(x1 * PI / 180)) * (y2 - y1)), 2)) * (40075.704 / 360);
-        double time = (double) differenceBetweenTimeStamps / 3600;
+            double distance = sqrt(pow((x2 - x1), 2) + pow(((cos(x1 * PI / 180)) * (y2 - y1)), 2)) * (40075.704 / 360);
+            double time = (double) differenceBetweenTimeStamps / 3600;
 
-        return (int) (distance / time);
+            return (int) (distance / time);
+        } else {
+          return 28000;
+        }
+
     }
 
     @Override
