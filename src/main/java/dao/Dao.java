@@ -1,11 +1,9 @@
 package dao;
 
-import dao.IDao;
 import model.ISSPosition;
 import model.Person;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,26 +95,28 @@ public class Dao implements IDao {
 
     @Override
     public int addAstronaut(Person person) {
-        return 0;
+        String insertAstronautsToIss = String.format("INSERT INTO iss_astronauts (astronaut_first_name, astronaut_last_name)" +
+                "VALUES('%s', '%s')", person.getFirstName(), person.getLastName());
+        return update(insertAstronautsToIss);
     }
 
     @Override
-    public int getAstronaut() {
+    public List<Person> getAstronauts() {
         List<Person> astronautsList = new ArrayList<>();
-        Person person = new Person();
         openConnection();
         try {
             String queryForAllAstronauts = String.format("SELECT * FROM iss_astronauts");
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(queryForAllAstronauts);
             while (resultSet.next()){
-
+                astronautsList.add(getAstronautFromResultSet(resultSet));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 0;
+        closeConnection();
+        return astronautsList;
     }
 
 

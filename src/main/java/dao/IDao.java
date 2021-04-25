@@ -18,7 +18,7 @@ public interface IDao {
 
     int addAstronaut(Person person);
 
-    int getAstronaut();
+    List<Person> getAstronauts();
 
 
 }
