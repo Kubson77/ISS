@@ -5,6 +5,7 @@ public class ISSPosition {
     private long unixTime;
     private String latitude;
     private String longitude;
+    private String speed;
 
     public ISSPosition(long unixTime, String latitude, String longitude) {
         this.unixTime = unixTime;
@@ -13,6 +14,14 @@ public class ISSPosition {
     }
 
     public ISSPosition() {
+    }
+
+    public String getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(String speed) {
+        this.speed = speed;
     }
 
     public long getUnixTime() {

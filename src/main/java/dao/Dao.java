@@ -59,9 +59,9 @@ public class Dao implements IDao {
     public int addIssPosition(ISSPosition issPosition) {
 //         Wprowadzenie danych do bazy danych.  Latitude(String), Longitude(String), timestamp(sekundy, long),
 //        Data dodania rekordu(LocalDate), Liczba czlonkow zalogi(int), predkosc poruszania sie stacji(int)
-        String insertIssPosition = String.format("INSERT INTO iss_database (latitude, longitude, timestamp, date)" +
-                        "VALUES('%s', '%s', %d, localtime())", issPosition.getLatitude(), issPosition.getLongitude(),
-                issPosition.getUnixTime());
+        String insertIssPosition = String.format("INSERT INTO iss_database (latitude, longitude, timestamp, date, speed)" +
+                        "VALUES('%s', '%s', %d, localtime(), '%d')", issPosition.getLatitude(), issPosition.getLongitude(),
+                issPosition.getUnixTime(), addIssSpeed());
         return update(insertIssPosition);
     }
 

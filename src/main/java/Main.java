@@ -31,38 +31,38 @@ public class Main {
         position.setLongitude((String) coordinates.get("longitude"));
 
         Dao daoIssPosition = new Dao();
-//        daoIssPosition.addIssPosition(position);
-//        System.out.println(daoIssPosition.getLastIssCoordinates());
+        daoIssPosition.addIssPosition(position);
+//        System.out.println(daoIssPosition.getL-astIssCoordinates());
 //        System.out.println(daoIssPosition.getOneBeforeLastIssCoordinates());
 
 
-        url = new URL("http://api.open-notify.org/astros.json");
-        urlcon = url.openConnection();
-        input = urlcon.getInputStream();
-        buffer = new BufferedReader(new InputStreamReader(input));
-        JSONObject astros = (JSONObject) new JSONParser().parse(buffer);
-
-        JSONArray people = (JSONArray) astros.get("people");
-        List<Person> astronauts = new ArrayList<>();
-        for (Object o : people) {
-            Person person = new Person();
-            JSONObject astronaut = (JSONObject) o;
-            String fullName = (String) astronaut.get("name");
-            String[] splitName = fullName.split(" ");
-            if (splitName.length > 1) {
-                person.setFirstName(splitName[0]);
-                String lastName = "";
-                for (int i = 1; i < splitName.length; i++) {
-                    lastName += splitName[i];
-                    if (splitName.length - 1 > i) {
-                        lastName += " ";
-                    }
-                }
-                person.setLastName(lastName);
-                astronauts.add(person);
-            }
-        }
-        System.out.println(astronauts);
+//        url = new URL("http://api.open-notify.org/astros.json");
+//        urlcon = url.openConnection();
+//        input = urlcon.getInputStream();
+//        buffer = new BufferedReader(new InputStreamReader(input));
+//        JSONObject astros = (JSONObject) new JSONParser().parse(buffer);
+//
+//        JSONArray people = (JSONArray) astros.get("people");
+//        List<Person> astronauts = new ArrayList<>();
+//        for (Object o : people) {
+//            Person person = new Person();
+//            JSONObject astronaut = (JSONObject) o;
+//            String fullName = (String) astronaut.get("name");
+//            String[] splitName = fullName.split(" ");
+//            if (splitName.length > 1) {
+//                person.setFirstName(splitName[0]);
+//                String lastName = "";
+//                for (int i = 1; i < splitName.length; i++) {
+//                    lastName += splitName[i];
+//                    if (splitName.length - 1 > i) {
+//                        lastName += " ";
+//                    }
+//                }
+//                person.setLastName(lastName);
+//                astronauts.add(person);
+//            }
+//        }
+//        System.out.println(astronauts);
 
     }
 }
