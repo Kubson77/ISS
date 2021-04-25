@@ -52,18 +52,20 @@ public class Main {
             String[] splitName = fullName.split(" ");
             if (splitName.length > 1) {
                 person.setFirstName(splitName[0]);
-                String lastName = "";
+                StringBuilder lastName = new StringBuilder();
                 for (int i = 1; i < splitName.length; i++) {
-                    lastName += splitName[i];
+                    lastName.append(splitName[i]);
                     if (splitName.length - 1 > i) {
-                        lastName += " ";
+                        lastName.append(" ");
                     }
                 }
-                person.setLastName(lastName);
+                person.setLastName(lastName.toString());
                 astronauts.add(person);
             }
         }
         System.out.println(astronauts);
+
+
 
     }
 }
