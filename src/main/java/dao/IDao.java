@@ -14,7 +14,7 @@ public interface IDao {
 
     int getIssSpeed();
 
-    int getHowManyPeopleInIss();
+    Integer getHowManyPeopleInIss();
 
     int addAstronaut(Person person);
 

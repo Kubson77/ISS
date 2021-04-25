@@ -4,6 +4,7 @@ public class Person {
     private String firstName;
     private String lastName;
     private int astronautId;
+    private Integer astronautsCount;
 
     public Person(String firstName, String lastName) {
         this.firstName = firstName;
@@ -35,6 +36,14 @@ public class Person {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Integer getAstronautsCount() {
+        return astronautsCount;
+    }
+
+    public void setAstronautsCount(Integer astronautsCount) {
+        this.astronautsCount = astronautsCount;
     }
 
     @Override

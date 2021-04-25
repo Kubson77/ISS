@@ -61,7 +61,6 @@ public class Main {
                 }
                 person.setLastName(lastName.toString());
                 astronauts.add(person);
-                daoIssPosition.addAstronaut(person);
             }
         }
         System.out.println(astronauts);

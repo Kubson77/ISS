@@ -89,8 +89,21 @@ public class Dao implements IDao {
     }
 
     @Override
-    public int getHowManyPeopleInIss() {
-        return 0;
+    public Integer getHowManyPeopleInIss() {
+        Person person = new Person();
+        openConnection();
+        try {
+            String query = String.format("SELECT COUNT(*) FROM iss_astronauts;");
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                person.setAstronautsCount(resultSet.getInt("COUNT(*)"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        closeConnection();
+        return person.getAstronautsCount();
     }
 
     @Override
@@ -108,7 +121,7 @@ public class Dao implements IDao {
             String queryForAllAstronauts = String.format("SELECT * FROM iss_astronauts");
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(queryForAllAstronauts);
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 astronautsList.add(getAstronautFromResultSet(resultSet));
             }
 
@@ -161,7 +174,8 @@ public class Dao implements IDao {
         issPosition.setSpeed(resultSet.getInt("speed"));
         return issPosition;
     }
-    private Person getAstronautFromResultSet(ResultSet resultSet) throws SQLException{
+
+    private Person getAstronautFromResultSet(ResultSet resultSet) throws SQLException {
         Person astronaut = new Person();
         astronaut.setFirstName(resultSet.getString("astronaut_first_name"));
         astronaut.setLastName(resultSet.getString("astronaut_last_name"));
