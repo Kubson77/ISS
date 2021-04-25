@@ -72,10 +72,10 @@ public class Dao implements IDao {
                 getLastIssCoordinates().getUnixTime()
                         - getOneBeforeLastIssCoordinates().getUnixTime();
 
-        double x1 = Double.parseDouble(getOneBeforeLastIssCoordinates().getLongitude());
-        double x2 = Double.parseDouble(getLastIssCoordinates().getLongitude());
-        double y1 = Double.parseDouble(getLastIssCoordinates().getLatitude());
-        double y2 = Double.parseDouble(getOneBeforeLastIssCoordinates().getLatitude());
+        double x1 = Double.parseDouble(getOneBeforeLastIssCoordinates().getLatitude());
+        double x2 = Double.parseDouble(getLastIssCoordinates().getLatitude());
+        double y1 = Double.parseDouble(getOneBeforeLastIssCoordinates().getLongitude());
+        double y2 = Double.parseDouble(getLastIssCoordinates().getLongitude());
 
         double distance = sqrt(pow((x2 - x1), 2) + pow(((cos(x1 * PI / 180)) * (y2 - y1)), 2)) * (40075.704 / 360);
         double time = (double) differenceBetweenTimeStamps / 3600;
