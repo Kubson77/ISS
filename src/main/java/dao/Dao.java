@@ -28,6 +28,7 @@ public class Dao implements IDao {
                 issPosition.setLongitude(resultSet.getString("longitude"));
                 issPosition.setLatitude(resultSet.getString("latitude"));
                 issPosition.setUnixTime(resultSet.getLong("timestamp"));
+                issPosition.setSpeed(resultSet.getInt("speed"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -47,6 +48,7 @@ public class Dao implements IDao {
                 issPosition.setLongitude(resultSet.getString("longitude"));
                 issPosition.setLatitude(resultSet.getString("latitude"));
                 issPosition.setUnixTime(resultSet.getLong("timestamp"));
+                issPosition.setSpeed(resultSet.getInt("speed"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -57,8 +59,6 @@ public class Dao implements IDao {
 
     @Override
     public int addIssPosition(ISSPosition issPosition) {
-//         Wprowadzenie danych do bazy danych.  Latitude(String), Longitude(String), timestamp(sekundy, long),
-//        Data dodania rekordu(LocalDate), Liczba czlonkow zalogi(int), predkosc poruszania sie stacji(int)
         String insertIssPosition = String.format("INSERT INTO iss_database (latitude, longitude, timestamp, date, speed)" +
                         "VALUES('%s', '%s', %d, localtime(), '%d')", issPosition.getLatitude(), issPosition.getLongitude(),
                 issPosition.getUnixTime(), addIssSpeed());
@@ -85,13 +85,14 @@ public class Dao implements IDao {
 
     @Override
     public int getIssSpeed() {
-        return 0;
+        return getLastIssCoordinates().getSpeed();
     }
 
     @Override
     public int getHowManyPeopleInIss() {
         return 0;
     }
+
 
     private void openConnection() {
         try {
@@ -126,11 +127,12 @@ public class Dao implements IDao {
         return result;
     }
 
-    private ISSPosition getIssPostiionFromResultSet(ResultSet resultSet) throws SQLException {
+    private ISSPosition getIssPositionFromResultSet(ResultSet resultSet) throws SQLException {
         ISSPosition issPosition = new ISSPosition();
         issPosition.setLatitude(resultSet.getString("latitude"));
         issPosition.setLongitude(resultSet.getString("longitude"));
         issPosition.setUnixTime(resultSet.getLong("timestamp"));
+        issPosition.setSpeed(resultSet.getInt("speed"));
         return issPosition;
     }
 }
