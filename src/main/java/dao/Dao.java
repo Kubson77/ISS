@@ -7,6 +7,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.*;
+import static java.lang.Math.PI;
+
 public class Dao implements IDao {
 
     private String databaseUrl = "jdbc:mysql://localhost:3306/ISSdatabase";
@@ -69,15 +72,15 @@ public class Dao implements IDao {
                 getLastIssCoordinates().getUnixTime()
                         - getOneBeforeLastIssCoordinates().getUnixTime();
 
-        long differenceBetweenLongitudes =
-                Long.getLong(getLastIssCoordinates().getLongitude())
-                        - Long.getLong(getOneBeforeLastIssCoordinates().getLongitude());
-        long differenceBetweenLatitudes =
-                Long.getLong(getLastIssCoordinates().getLatitude())
-                        - Long.getLong(getOneBeforeLastIssCoordinates().getLatitude());
+        double x1 = Double.parseDouble(getOneBeforeLastIssCoordinates().getLongitude());
+        double x2 = Double.parseDouble(getLastIssCoordinates().getLongitude());
+        double y1 = Double.parseDouble(getLastIssCoordinates().getLatitude());
+        double y2 = Double.parseDouble(getOneBeforeLastIssCoordinates().getLatitude());
 
+        double distance = sqrt(pow((x2 - x1), 2) + pow(((cos(x1 * PI / 180)) * (y2 - y1)), 2)) * (40075.704 / 360);
+        double time = (double) differenceBetweenTimeStamps / 3600;
 
-        return 0;
+        return (int) (distance / time);
     }
 
     @Override
