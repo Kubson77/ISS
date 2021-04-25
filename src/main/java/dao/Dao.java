@@ -101,6 +101,20 @@ public class Dao implements IDao {
 
     @Override
     public int getAstronaut() {
+        List<Person> astronautsList = new ArrayList<>();
+        Person person = new Person();
+        openConnection();
+        try {
+            String queryForAllAstronauts = String.format("SELECT * FROM iss_astronauts");
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(queryForAllAstronauts);
+            while (resultSet.next()){
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return 0;
     }
 
@@ -145,5 +159,12 @@ public class Dao implements IDao {
         issPosition.setUnixTime(resultSet.getLong("timestamp"));
         issPosition.setSpeed(resultSet.getInt("speed"));
         return issPosition;
+    }
+    private Person getAstronautFromResultSet(ResultSet resultSet) throws SQLException{
+        Person astronaut = new Person();
+        astronaut.setFirstName(resultSet.getString("astronaut_first_name"));
+        astronaut.setLastName(resultSet.getString("astronaut_last_name"));
+        astronaut.setAstronautId(resultSet.getInt("astronaut_id"));
+        return astronaut;
     }
 }
