@@ -2,6 +2,7 @@ package dao;
 
 import dao.IDao;
 import model.ISSPosition;
+import model.Person;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -90,6 +91,16 @@ public class Dao implements IDao {
 
     @Override
     public int getHowManyPeopleInIss() {
+        return 0;
+    }
+
+    @Override
+    public int addAstronaut(Person person) {
+        return 0;
+    }
+
+    @Override
+    public int getAstronaut() {
         return 0;
     }
 
