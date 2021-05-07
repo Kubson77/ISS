@@ -94,7 +94,6 @@ public class Dao implements IDao {
                 .map(x -> x.getSpeed())
                 .reduce(0, Integer::sum);
         Integer average = sum / getAllData().size();
-
         return average;
     }
 
