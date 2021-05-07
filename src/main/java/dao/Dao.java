@@ -170,7 +170,6 @@ public class Dao implements IDao {
     private void openConnection() {
         try {
             connection = DriverManager.getConnection(databaseUrl, "root", "example12345");
-            System.out.println("Database Connected");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -180,7 +179,6 @@ public class Dao implements IDao {
         if (connection != null) {
             try {
                 connection.close();
-                System.out.println("Database connection closed");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
