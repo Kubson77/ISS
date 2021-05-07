@@ -72,7 +72,7 @@ public class ISSPosition {
     @Override
     public String toString() {
         return "ISSPosition{" +
-                ", unixTime=" + unixTime +
+                "unixTime=" + unixTime +
                 ", latitude='" + latitude + '\'' +
                 ", longitude='" + longitude + '\'' +
                 ", speed=" + speed +

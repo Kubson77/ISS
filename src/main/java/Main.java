@@ -70,8 +70,9 @@ public class Main {
 
 //        System.out.println(daoIssPosition.getHowManyPeopleInIss());
 
-        System.out.println(daoIssPosition.getAllData());
-        System.out.println(daoIssPosition.getAverageSpeed());
-        System.out.println(daoIssPosition.getByDate(Date.valueOf("2021-05-06"), Date.valueOf("2021-05-08")));
+//        System.out.println(daoIssPosition.getAllData());
+//        System.out.println(daoIssPosition.getAverageSpeed());
+//        System.out.println(daoIssPosition.getByDate(Date.valueOf("2021-05-06"), Date.valueOf("2021-05-08")));
+        System.out.println(daoIssPosition.getOneBeforeLastIssCoordinates());
     }
 }

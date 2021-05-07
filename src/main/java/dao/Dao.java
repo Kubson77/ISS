@@ -28,10 +28,7 @@ public class Dao implements IDao {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(queryGetLastCoordinates);
             while (resultSet.next()) {
-                issPosition.setLongitude(resultSet.getString("longitude"));
-                issPosition.setLatitude(resultSet.getString("latitude"));
-                issPosition.setUnixTime(resultSet.getLong("timestamp"));
-                issPosition.setSpeed(resultSet.getInt("speed"));
+                issPosition = getIssPositionFromResultSet(resultSet);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -48,10 +45,7 @@ public class Dao implements IDao {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(queryGetLastCoordinates);
             while (resultSet.next()) {
-                issPosition.setLongitude(resultSet.getString("longitude"));
-                issPosition.setLatitude(resultSet.getString("latitude"));
-                issPosition.setUnixTime(resultSet.getLong("timestamp"));
-                issPosition.setSpeed(resultSet.getInt("speed"));
+                issPosition = getIssPositionFromResultSet(resultSet);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
