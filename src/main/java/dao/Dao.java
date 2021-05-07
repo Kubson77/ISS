@@ -11,6 +11,7 @@ import static java.lang.Math.*;
 import static java.lang.Math.PI;
 
 public class Dao implements IDao {
+    private int defaultSpeed = 28000;
 
     private String databaseUrl = "jdbc:mysql://localhost:3306/ISSdatabase";
     private Connection connection;
@@ -82,7 +83,7 @@ public class Dao implements IDao {
 
             return (int) (distance / time);
         } else {
-          return 28000;
+            return defaultSpeed;
         }
 
     }
@@ -91,6 +92,34 @@ public class Dao implements IDao {
     public int getIssSpeed() {
         return getLastIssCoordinates().getSpeed();
     }
+
+    public int getAverageSpeed(){
+        Integer sum = getAllData().stream()
+                .map(x -> x.getSpeed())
+                .reduce(0, Integer::sum);
+        Integer average = sum/getAllData().size();
+
+        return average;
+    }
+
+
+    public List<ISSPosition> getAllData(){
+        List<ISSPosition> issPositionList = new ArrayList<>();
+        openConnection();
+        try {
+            String query = "SELECT * FROM iss_database";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while(resultSet.next()){
+                issPositionList.add(getIssPositionFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        closeConnection();
+        return issPositionList;
+    }
+
 
     @Override
     public Integer getHowManyPeopleInIss() {

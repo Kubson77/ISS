@@ -31,7 +31,7 @@ public class Main {
         position.setLongitude((String) coordinates.get("longitude"));
 
         Dao daoIssPosition = new Dao();
-//        daoIssPosition.addIssPosition(position);
+        daoIssPosition.addIssPosition(position);
 //        System.out.println(daoIssPosition.getLastIssCoordinates());
 //        System.out.println(daoIssPosition.getIssSpeed());
 //        System.out.println(daoIssPosition.getOneBeforeLastIssCoordinates());
@@ -61,11 +61,15 @@ public class Main {
                 }
                 person.setLastName(lastName.toString());
                 astronauts.add(person);
+//                daoIssPosition.addAstronaut(person);
+
             }
         }
-        System.out.println(astronauts);
+//        System.out.println(astronauts);
 
+//        System.out.println(daoIssPosition.getHowManyPeopleInIss());
 
-
+        System.out.println(daoIssPosition.getAllData());
+        System.out.println(daoIssPosition.getAverageSpeed());
     }
 }
