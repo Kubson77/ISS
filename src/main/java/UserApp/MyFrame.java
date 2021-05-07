@@ -24,13 +24,12 @@ class ButtonPanel extends JPanel implements ActionListener {
     public static final int HEIGHT = 500;
     public static final int WIDTH = 1500;
     Dao dao = new Dao();
-    private JButton greenButton;
     private JButton blueButton;
     private JButton redButton;
     private JButton locationButton;
 
     public ButtonPanel() {
-        locationButton = new JButton("Location");
+        locationButton = new JButton("Last Location");
         blueButton = new JButton("Blue");
         redButton = new JButton("Red");
 
@@ -38,7 +37,7 @@ class ButtonPanel extends JPanel implements ActionListener {
         blueButton.addActionListener(this);
         redButton.addActionListener(this);
 
-        setLayout(new FlowLayout());
+        setLayout(new GridLayout());
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         add(locationButton);
         add(blueButton);
@@ -54,7 +53,9 @@ class ButtonPanel extends JPanel implements ActionListener {
             System.out.println(dao.getLastIssCoordinates().getLatitude());
             System.out.println("Longitude");
             System.out.println(dao.getLastIssCoordinates().getLongitude());
-            setBackground(Color.GREEN);
+            String msg = String.format("Longitude: " + dao.getLastIssCoordinates().getLongitude() + " Latitude: "
+                    + dao.getLastIssCoordinates().getLatitude());
+            JOptionPane.showMessageDialog(null, msg);
         } else if (source == blueButton)
             setBackground(Color.BLUE);
 
