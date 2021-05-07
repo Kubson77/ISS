@@ -4,8 +4,10 @@ import model.ISSPosition;
 import model.Person;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.lang.Math.*;
 import static java.lang.Math.PI;
@@ -93,24 +95,30 @@ public class Dao implements IDao {
         return getLastIssCoordinates().getSpeed();
     }
 
-    public int getAverageSpeed(){
+    public int getAverageSpeed() {
         Integer sum = getAllData().stream()
                 .map(x -> x.getSpeed())
                 .reduce(0, Integer::sum);
-        Integer average = sum/getAllData().size();
+        Integer average = sum / getAllData().size();
 
         return average;
     }
 
+    public List<ISSPosition> getByDate(Date from, Date to) {
+        return getAllData().stream()
+                .filter(p -> p.getDate().after(from))
+                .filter(p -> p.getDate().before(to))
+                .collect(Collectors.toList());
+    }
 
-    public List<ISSPosition> getAllData(){
+    public List<ISSPosition> getAllData() {
         List<ISSPosition> issPositionList = new ArrayList<>();
         openConnection();
         try {
             String query = "SELECT * FROM iss_database";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 issPositionList.add(getIssPositionFromResultSet(resultSet));
             }
         } catch (SQLException e) {
@@ -204,6 +212,7 @@ public class Dao implements IDao {
         issPosition.setLatitude(resultSet.getString("latitude"));
         issPosition.setLongitude(resultSet.getString("longitude"));
         issPosition.setUnixTime(resultSet.getLong("timestamp"));
+        issPosition.setDate(resultSet.getDate("date"));
         issPosition.setSpeed(resultSet.getInt("speed"));
         return issPosition;
     }

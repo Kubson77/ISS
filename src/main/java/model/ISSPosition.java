@@ -1,11 +1,16 @@
 package model;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
 public class ISSPosition {
     private int id;
     private long unixTime;
     private String latitude;
     private String longitude;
     private int speed;
+    private Date date;
+
 
     public ISSPosition(long unixTime, String latitude, String longitude) {
         this.unixTime = unixTime;
@@ -56,13 +61,22 @@ public class ISSPosition {
         this.id = id;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
         return "ISSPosition{" +
-                "unixTime=" + unixTime +
+                ", unixTime=" + unixTime +
                 ", latitude='" + latitude + '\'' +
                 ", longitude='" + longitude + '\'' +
-                ", speed [km/h]=" + speed +
+                ", speed=" + speed +
+                ", date=" + date +
                 '}';
     }
 }

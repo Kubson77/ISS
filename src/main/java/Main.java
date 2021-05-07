@@ -9,6 +9,7 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -71,5 +72,6 @@ public class Main {
 
         System.out.println(daoIssPosition.getAllData());
         System.out.println(daoIssPosition.getAverageSpeed());
+        System.out.println(daoIssPosition.getByDate(Date.valueOf("2021-05-06"), Date.valueOf("2021-05-08")));
     }
 }
