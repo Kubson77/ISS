@@ -24,23 +24,23 @@ class ButtonPanel extends JPanel implements ActionListener {
     public static final int HEIGHT = 500;
     public static final int WIDTH = 1500;
     Dao dao = new Dao();
-    private JButton blueButton;
+    private JButton getSpeedButton;
     private JButton redButton;
     private JButton locationButton;
 
     public ButtonPanel() {
         locationButton = new JButton("Last Location");
-        blueButton = new JButton("Blue");
+        getSpeedButton = new JButton("Speed of ISS");
         redButton = new JButton("Red");
 
         locationButton.addActionListener(this);
-        blueButton.addActionListener(this);
+        getSpeedButton.addActionListener(this);
         redButton.addActionListener(this);
 
         setLayout(new GridLayout());
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         add(locationButton);
-        add(blueButton);
+        add(getSpeedButton);
         add(redButton);
     }
 
@@ -49,17 +49,15 @@ class ButtonPanel extends JPanel implements ActionListener {
         Object source = e.getSource();
 
         if (source == locationButton) {
-            System.out.println("Latitude");
-            System.out.println(dao.getLastIssCoordinates().getLatitude());
-            System.out.println("Longitude");
-            System.out.println(dao.getLastIssCoordinates().getLongitude());
             String msg = String.format("Longitude: " + dao.getLastIssCoordinates().getLongitude() + " Latitude: "
                     + dao.getLastIssCoordinates().getLatitude());
             JOptionPane.showMessageDialog(null, msg);
-        } else if (source == blueButton)
-            setBackground(Color.BLUE);
-
-        else if (source == redButton)
+        } else if (source == getSpeedButton) {
+            String speedMsg = String.format("Speed: " + dao.getLastIssCoordinates().getSpeed() + "km/h");
+            JOptionPane.showMessageDialog(null, speedMsg);
+        }
+        else if (source == redButton) {
             setBackground(Color.RED);
+        }
     }
 }
