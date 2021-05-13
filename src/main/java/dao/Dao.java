@@ -4,7 +4,6 @@ import model.ISSPosition;
 import model.Person;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
